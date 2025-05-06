@@ -35,5 +35,27 @@ const createManutencao = async (req, res) => {
     }
 };
 
+const updateManutencao = async (req, res) => {
+    try {
+        const { nome, equipamento_id } = req.body;
+        const updatedManutencao = await maintenanceModel.updateManutencao(req.params.id, nome, equipamento_id);
+        if (!updatedManutencao) {
+            return res.status(404).json({ message: "Manutenção não encontrado." });
+        }
+        res.json(updatedManutencao);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao atualizar a Manutenção." });
+    }
+}
 
-module.exports = { getAllManutencao, getManutencaoById, createManutencao };
+const deleteManutencao = async (req, res) => {
+    try {
+        const message = await maintenanceModel.deleteManutencao(req.params.id);
+        res.json(message);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao deletar manutenção." });
+    }
+}
+
+
+module.exports = { getAllManutencao, getManutencaoById, createManutencao, updateManutencao, deleteManutencao };
