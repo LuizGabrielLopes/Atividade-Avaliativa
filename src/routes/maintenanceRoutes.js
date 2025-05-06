@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const maintenanceController = require('../controllers/maintenanceControllers');
+const apiKeyMiddleware = require("../config/apiKey");
 
+router.use(apiKeyMiddleware);
 
 router.get('/', maintenanceController.getAllManutencao);
 router.get('/:id', maintenanceController.getManutencaoById);
